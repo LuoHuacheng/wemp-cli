@@ -13,8 +13,7 @@ const rootPath = process.cwd();
 
 program
   .version(require('../package').version)
-  .usage('[options] <file ...>')
-  .option('-i, --init [name]', 'create a new project from a template')
+  .option('-i, --init <name>', 'create a new project from a template')
   .option('-p, --page <name>', 'create a new page from a template')
   .option('-c, --component <name>', 'create a new component from a template')
   .option('-R, --remove-page [name]', 'remove one page or all, depends on the option name exists or not')
