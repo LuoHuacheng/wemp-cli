@@ -1,11 +1,11 @@
 {
-  "name": "wxapp-cli",
+  "name": "wemp-cli",
   "version": "1.0.0",
   "description": "",
   "bin": {
-    "wxapp": "bin/wxapp.js"
+    "wemp": "bin/index.js"
   },
-  "main": "wxapp.js",
+  "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
