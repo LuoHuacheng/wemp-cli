@@ -79,7 +79,7 @@ function create(dir, name) {
       console.log(chalk.red(`Fail to create new ${dir === 'views' ? 'page' : 'component'} : ` + err.message.trim()));
       return;
     } else {
-      const extNames = ['less', 'js', 'html', 'json'];
+      const extNames = ['styl', 'js', 'html', 'json'];
       extNames.forEach(item => {
         fs.writeFileSync(dirPath + '/' + name + '.' + item, loadTemplate(dir, item, { dir, name }));
       });

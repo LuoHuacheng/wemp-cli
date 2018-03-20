@@ -1,6 +1,6 @@
 {
   "name": "wemp-cli",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "",
   "bin": {
     "wemp": "bin/index.js"
