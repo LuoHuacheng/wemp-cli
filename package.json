@@ -1,7 +1,7 @@
 {
   "name": "wemp-cli",
   "version": "1.0.5",
-  "description": "",
+  "description": "a simple cli for weapp",
   "bin": {
     "wemp": "bin/index.js"
   },
@@ -9,8 +9,11 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": [
+    "weapp",
+    "cli"
+  ],
+  "author": "LuoHuacheng<154224099@qq.com>",
   "license": "ISC",
   "dependencies": {
     "chalk": "^2.3.2",
