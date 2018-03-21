@@ -40,11 +40,14 @@ if (program.removeComponent) {
   remove('components', program.removeComponent);
 }
 
-// create a new project
+/**
+ * create a new project
+ * @param {String} name 
+ */
 function initProject(name) {
   if (!name) return;
   console.log(chalk.blue(`ready to create project: ${name}`));
-  var projectPath = path.join(rootPath, name);
+  const projectPath = path.join(rootPath, name);
   if (fs.existsSync(projectPath)) {
     console.log(
       chalk.red(`project named ${name} has been existed, please use another project name`)
@@ -64,10 +67,14 @@ function initProject(name) {
 }
 
 
-// create a new page or component
+/**
+ * create a new page or component
+ * @param {String} dir views or components
+ * @param {String} name 
+ */
 function create(dir, name) {
   if (!name) return;
-  var dirPath = path.join(rootPath, 'src', dir, name);
+  const dirPath = path.join(rootPath, 'src', dir, name);
   if (fs.existsSync(dirPath)) {
     console.log(
       chalk.red(`file named ${name} has been existed, please use another file name`)
@@ -84,15 +91,28 @@ function create(dir, name) {
         fs.writeFileSync(dirPath + '/' + name + '.' + item, loadTemplate(dir, item, { dir, name }));
       });
       console.log(chalk.green(`create ${dir === 'views' ? 'page' : 'component'} ${name} completed !`));
+      if (dir === 'views') {
+        handleAppJSON(name);
+      }
     }
   });
 }
 
+/**
+ * get templates
+ * @param {String} dir views or components
+ * @param {String} type file type(extended name)
+ * @param {Object} options views or components's options
+ */
 function loadTemplate(dir, type, options) {
   return require(`../template/${dir}/${type}.js`)(options);
 }
 
-// remove a page or component
+/**
+ * remove a page or component
+ * @param {String} dir views or components
+ * @param {String} name 
+ */
 function remove(dir, name) {
   const dirPath = typeof name === 'boolean' ? path.join(rootPath, 'src', dir) : path.join(rootPath, 'src', dir, name);
   if (typeof name === 'boolean') {
@@ -103,15 +123,50 @@ function remove(dir, name) {
     }]).then(answers => {
       if (answers.yes) {
         rm(dirPath);
-        console.log(chalk.green(`remove ${dir === 'views' ? 'page' : 'component'} ${name} completed !`));
+        console.log(chalk.green(`remove ${dir === 'views' ? 'page' : 'component'} ${typeof name === 'boolean' ? 'all' : name} completed !`));
+        if (dir === 'views') {
+          handleAppJSON(name, true);
+        }
       }
     });
   } else {
     if (fs.existsSync(dirPath)) {
       rm(dirPath);
       console.log(chalk.green(`remove ${dir === 'views' ? 'page' : 'component'} ${name} completed !`));
+      if (dir === 'views') {
+        handleAppJSON(name, true);
+      }
     } else {
       console.log(chalk.red(`${dirPath} does not exist !`));
     }
   }
 }
+
+/**
+ * handle the pages in app.json file
+ * @param {String} name 
+ * @param {Boolean} remove 
+ */
+function handleAppJSON(name, remove = false) {
+  const appFile = rootPath + '/src/app.json';
+  const target = 'views/'+ name + '/' + name;
+  fs.readFile(appFile, 'utf8', (err, data) => {
+    if (err) {
+      console.log(chalk.red(err.toString()));
+      return;
+    }
+    const appJson = JSON.parse(data.toString());
+    if (remove) {
+      typeof name === 'boolean' ? appJson.pages = [] : appJson.pages.splice(target, 1);
+    } else {
+      appJson.pages.push(target);
+    }
+    fs.writeFile(appFile, JSON.stringify(appJson, null, 2), (err) => {
+      if (err) {
+        console.log(chalk.red(err.toString()));
+        return;
+      }
+      console.log(chalk.green(`page ${name} has been ${remove ? 'removed from' : 'injected into'} app.json`));
+    })
+  });
+} 
