@@ -12,13 +12,13 @@ $ npm install -g wemp-cli
 ### Usage
 
 ``` bash
-$ wemp init <project-name>
+$ wemp -i <project-name>
 ```
 
 Example:
 
 ``` bash
-$ wemp init my-project
+$ wemp -i my-project
 ```
 
 ### License
