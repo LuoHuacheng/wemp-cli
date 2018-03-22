@@ -2,7 +2,7 @@ module.exports = options => `{
   "navigationBarBackgroundColor": "#ffffff",
   "navigationBarTextStyle": "black",
   "navigationBarTitleText": "${options.name}",
-  "backgroundColor": "#000000",
+  "backgroundColor": "#f0f0f0",
   "backgroundTextStyle": "light",
   "enablePullDownRefresh": false
 }

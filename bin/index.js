@@ -56,7 +56,7 @@ function initProject(name) {
   }
   const spinner = ora('downloading template');
   spinner.start();
-  download('LuoHuacheng/wxapp-template', projectPath, function(err) {
+  download('LuoHuacheng/wemp-template', projectPath, function(err) {
     spinner.stop();
     if (err) {
       console.log(chalk.red('Fail to download repo : ' + err.message.trim()));
